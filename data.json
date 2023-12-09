@@ -1,1 +1,25 @@
-[]
+[
+    {
+      "id": "1",
+      "class": "8-М",
+      "eat1": "Кум пот",
+      "eat2": "Кам пот",
+      "za": 1,
+      "nine": 1,
+      "tg": 995077290,
+      "classid": 111810,
+      "users": [
+        {
+          "name": "JDK",
+          "color": "#ffb8b8"
+        },
+        {
+          "name": "Maxim",
+          "color": "#ffb8b8"
+        },
+        {
+          "name": "Maxim"
+        }
+      ]
+    }
+  ]
