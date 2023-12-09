@@ -1,33 +1,29 @@
 const express = require('express');
-const cors = require('cors'); // Додайте цей рядок
+const cors = require('cors');
 const fs = require('fs');
 
 const app = express();
 const port = 3001;
 
-app.use(cors()); // Додайте цей рядок
+app.use(cors());
 app.use(express.json());
 
-// Читання JSON-файлу
 function readData() {
   const rawData = fs.readFileSync('data.json');
   return JSON.parse(rawData);
 }
 
-// Запис JSON-даних у файл
 function writeData(data) {
   const jsonData = JSON.stringify(data, null, 2);
   fs.writeFileSync('data.json', jsonData);
 }
 
-// Отримати всі дані
-app.get('/api/data', (req, res) => {
+app.get('/', (req, res) => {
   const data = readData();
   res.json(data);
 });
 
-// Отримати дані за ID
-app.get('/api/data/:id', (req, res) => {
+app.get('/:id', (req, res) => {
   const data = readData();
   const id = req.params.id;
   const item = data.find(item => item.id === parseInt(id));
@@ -39,15 +35,23 @@ app.get('/api/data/:id', (req, res) => {
   }
 });
 
-// Змінити дані за ID
-app.put('/api/data/:id', (req, res) => {
+app.post('/', (req, res) => {
+  const data = readData();
+  const newItem = req.body;
+  newItem.id = data.length + 1;
+  data.push(newItem);
+  writeData(data);
+  res.json({ message: 'Item added successfully', newItem });
+});
+
+app.put('/:id', (req, res) => {
   const data = readData();
   const id = req.params.id;
   const index = data.findIndex(item => item.id === parseInt(id));
 
   if (index !== -1) {
-    data[index] = req.body; // Перезаписати дані
-    writeData(data); // Записати зміни у файл
+    data[index] = req.body;
+    writeData(data);
     res.json({ message: 'Item updated successfully' });
   } else {
     res.status(404).json({ message: 'Item not found' });
