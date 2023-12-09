@@ -23,17 +23,7 @@ app.get('/', (req, res) => {
   res.json(data);
 });
 
-app.get('/:id', (req, res) => {
-  const data = readData();
-  const id = req.params.id;
-  const item = data.find(item => item.id === parseInt(id));
-  
-  if (item) {
-    res.json(item);
-  } else {
-    res.status(404).json({ message: 'Item not found' });
-  }
-});
+
 
 app.post('/', (req, res) => {
   const data = readData();
